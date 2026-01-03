@@ -178,3 +178,12 @@ def output_vals():
 #this is the function above
 
 output_vals()
+
+# these are just a duplicate version of the values above so it will be a list and won't conflict with the scatter plots once the AI converts these values into single digits
+cpuV0 = [1.232, 1.104, 3.238, 5.14, 11.776, 4.923, 3.312, 0]
+ramV1 = [1.8, 0]
+fansV2 = [12, 1, 1.2, 1.5, 5, 7, 0]
+boardV3 = [12, 5, 3.3, 5, 1.2, 1.8, 12, 0]
+hddV4 = [12, 5, 0]
+opV5 = [12, 5, 2.5, 2, 3.3, 9, 0]
+memCrdV6 = [5, 3.3, 1.5, 12, -12, 5, 0]
