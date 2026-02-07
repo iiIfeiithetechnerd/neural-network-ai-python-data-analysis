@@ -1,0 +1,10 @@
+plotly
+pandas 
+math 
+sys 
+matplotlib 
+numpy 
+tensorflow 
+config 
+subprocess
+importlib
