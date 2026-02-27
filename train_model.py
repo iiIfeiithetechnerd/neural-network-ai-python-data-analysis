@@ -1,16 +1,16 @@
 import tensorflow as tf
 import numpy as np
-import config 
+import hardwaredetails
 
 # this prepares the training data from the config.py file.
 
 x_train = np.array([[0], [1], [2], [3], [4], [5], [6]], dtype=np.float32)
-y_train = np.array([np.mean(config.cpuV), np.mean(config.ramV), np.mean(config.fansV), np.mean(config.boardV), np.mean(config.hddV), np.mean(config.opV), np.mean(config.memCrdV)], dtype=np.float32)
+y_train = np.array([np.mean(hardwaredetails.cpuV0), np.mean(hardwaredetails.ramV1), np.mean(hardwaredetails.fansV2), np.mean(hardwaredetails.boardV3), np.mean(hardwaredetails.hddV4), np.mean(hardwaredetails.opV5), np.mean(hardwaredetails.memCrdV6)], dtype=np.float32)
 
 # this builds a very simple regression model.
 model = tf.keras.Sequential([
     tf.keras.layers.Dense(units=16, activation='relu', input_shape=[1]), 
-    tf.keras.layers.Dense(units=1)
+    tf.keras.layers.Dense(units=16)
 ])
 
 model.compile(optimizer='adam', loss='mean_squared_error')

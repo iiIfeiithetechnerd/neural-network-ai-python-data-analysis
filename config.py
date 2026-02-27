@@ -1,18 +1,21 @@
-import pandas as pd
-import math
 import sys
+import os
+import subprocess
 import matplotlib as pltmain
-
-#Yes, this is a note to myself. I know that plotly is not being used at the moment, but it will be used in the future.
-import plotly as fig
 import numpy as np
 import matplotlib.pyplot as plt
 
+# checks if hardware_details.py exists, if it does exist, this program will automatically be closed and will run the train_model.py script
+if os.path.exists("hardwaredetails.py"):
+    subprocess.Popen([sys.executable, "train_model.py"])
+    # terminates this script
+    sys.exit()
 
+
+# gets the build number of the program and certain libraries that it uses
 buildNum = "0.9.8"
 print("Build version: ", buildNum)
 print(f"MatPlotLB version: {pltmain.__version__}")
-print(f"Pandas version: {pd.__version__}")
 print(f"Numpy version: {np.__version__}")
 
 # all of these scrpts follow the same structure, they just have different purposes
@@ -68,6 +71,7 @@ voltage_Input_For_RAM1 = [1.8, 1.85, 1.9]
 voltage_Input_For_Fans1 = [11, 11.5, 11.7, 12]
 voltage_Input_For_Motherboard1 = [-5, -12, 5, 7.5, 12]
 
+# this allows user interaction
 cpuV = [1.232, 1.104, 3.238, 5.14, 11.776, 4.923, 3.312, 0]
 ramV = [1.8, 0]
 fansV = [12, 1, 1.2, 1.5, 5, 7, 0]
@@ -75,6 +79,8 @@ boardV = [12, 5, 3.3, 5, 1.2, 1.8, 12, 0]
 hddV = [12, 5, 0]
 opV = [12, 5, 2.5, 2, 3.3, 9, 0]
 memCrdV = [5, 3.3, 1.5, 12, -12, 5, 0]
+
+
 
 print("CPU Voltage (Actual data): ", cpuV)
 print("RAM Voltage (Actual data): ", ramV)
@@ -93,7 +99,6 @@ def create_all_graphs():
     plt.subplot(3, 4, 1)
     plt.hist(data1, bins=5, edgecolor='#0a3659', color='#72b3e8')
     plt.title('Voltage input for CPU (Prediction)', fontsize=7)
-    #fig.update_layout(title={'text': "Voltage input for CPU (Prediction)", 'pad': {'b': 20, 't': 10}})
     
     
     #Yes, this is a note to myself. I know that plotly is not being used at the moment, but it will be used in the future.
@@ -105,15 +110,12 @@ def create_all_graphs():
     plt.hist(data2, bins=3, edgecolor='#0a3659', color='#4aa4ed')
     plt.title('Voltage input for RAM (Prediction)', fontsize=7)
     
-    #fig.update_layout(title={'text': "Voltage input for CPU (Prediction)", 'pad': {'b': 20, 't': 10}})
-    
     #Yes, this is a note to myself. I know that plotly is not being used at the moment, but it will be used in the future.
     plt.xlabel('Voltage (V)')
 
     plt.subplot(3, 4, 3)
     plt.hist(data3, bins=4, edgecolor='#0a3659', color='#3b6d96')
     plt.title('Voltage input for Fans (Prediction)', fontsize=7)
-    #fig.update_layout(title={'text': "Voltage input for Fans (Prediction)", 'pad': {'b': 20, 't': 10}})
     
     #Yes, this is a note to myself. I know that plotly is not being used at the moment, but it will be used in the future.
     plt.xlabel('Voltage (V)')
@@ -122,7 +124,6 @@ def create_all_graphs():
     plt.subplot(3, 4, 4)
     plt.hist(data4, bins=5, edgecolor='#0a3659', color='#145d99')
     plt.title('Voltage input for Motherboard (Prediction)', fontsize=7)
-    #fig.update_layout(title={'text': "Voltage input for Motherboard (Prediction)", 'pad': {'b': 20, 't': 10}})
     
     #Yes, this is a note to myself. I know that plotly is not being used at the moment, but it will be used in the future.
     plt.xlabel('Voltage (V)')
@@ -130,7 +131,6 @@ def create_all_graphs():
     plt.subplot(3, 4, 5)
     plt.plot(cpuV, color='#72b3e8')
     plt.title('Voltage Input for CPU (Actual data gathered)', fontsize=7)
-    #fig.update_layout(title={'text': "Voltage Input Mean for CPU (Actual data gathered)", 'pad': {'b': 20, 't': 10}})
     
     #Yes, this is a note to myself. I know that plotly is not being used at the moment, but it will be used in the future.
     plt.xlabel('Voltage (V)')
@@ -179,11 +179,25 @@ def output_vals():
 
 output_vals()
 
-# these are just a duplicate version of the values above so it will be a list and won't conflict with the scatter plots once the AI converts these values into single digits
-cpuV0 = [1.232, 1.104, 3.238, 5.14, 11.776, 4.923, 3.312, 0]
-ramV1 = [1.8, 0]
-fansV2 = [12, 1, 1.2, 1.5, 5, 7, 0]
-boardV3 = [12, 5, 3.3, 5, 1.2, 1.8, 12, 0]
-hddV4 = [12, 5, 0]
-opV5 = [12, 5, 2.5, 2, 3.3, 9, 0]
-memCrdV6 = [5, 3.3, 1.5, 12, -12, 5, 0]
+# this area allows users to input their own values
+print("Input the values for these variables. Use numbers only. You must have at least 6 integers for best results.")
+cpuV0 = list(map(int, input("Type 6 integers for the CPU voltage. ").split()))
+ramV1 = list(map(int, input("Type 6 integers for the RAM voltage.").split()))
+fansV2 = list(map(int, input("Type 6 integers for the fans voltage.").split()))
+boardV3 = list(map(int, input("Type 6 integers for the motherboard voltage.").split()))
+hddV4 = list(map(int, input("Type 6 integers for the HDD/SSD (Or any other storage device) voltage.").split()))
+opV5 = list(map(int, input("Type 6 integers for the optical disk drive voltage.").split()))
+memCrdV6 = list(map(int, input("Type 6 integers for the memory card voltage.").split()))
+
+print("These are the values that you have inserted:", cpuV0, ramV1, fansV2, boardV3, hddV4, opV5, memCrdV6)
+
+with open('hardware_details.py', "w") as f:
+    f.write(repr(cpuV0))
+    f.write(repr(ramV1))
+    f.write(repr(fansV2))
+    f.write(repr(boardV3))
+    f.write(repr(hddV4))
+    f.write(repr(opV5))
+    f.write(repr(memCrdV6))
+
+print("A file containing your voltage inputs has been created.")

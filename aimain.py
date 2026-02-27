@@ -1,9 +1,30 @@
 import config
 import subprocess
+import sys
+import os
 import numpy as np
 import tensorflow as tf
-import importlib.metadata
 import matplotlib.pyplot as plt
+
+try:
+    base_path = sys._MEIPASS
+except AttributeError:
+    base_path = os.path.dirname(os.path.abspath(__file__))
+
+train_model_path = os.path.join(base_path, 'train_model.py')
+
+try:
+    process = subprocess.Popen(['python', train_model_path],
+                               stdout=sys.stdout,
+                               stderr=sys.stderr,
+                               stdin=sys.stdin,
+                               text=True)
+    process.wait()
+except FileNotFoundError:
+    print("Oh no! The 'python' interpreter is nowhere to be found. Please make sure that python is installed in your file path.")
+except Exception as e:
+    print(f"An error has occured: {e}")
+
 
 try:
    
